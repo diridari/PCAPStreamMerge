@@ -1,0 +1,2 @@
+192.168.7.2 bbb sudo tcpdump -U -s0 -i wpan0  -w-
+beagleBoneBlaock bbb cat uname -a

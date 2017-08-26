@@ -4,10 +4,11 @@ This application has the goal to combine the traffic of several Network devices 
 
 You may use this application if you develop IEE 802.15.4 (IoT) devices or other kinds of Mesh networks, where it is not possible to capture the whole Network.  
 
-
 This application has been written to enable sniffing a Mesh-Net where it is not possible to capture the whole network with just 
 one single Sniffer. 
 The Host request the tcpdump(or a other pcap source) from the Clients and 
+
+This application is based on Pipe-Relay wich was written to combine several ingoing pipes to one outgoing pipe.
 
 ***
 ## How to use

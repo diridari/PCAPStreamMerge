@@ -1,17 +1,17 @@
 cmake_minimum_required(VERSION 3.6)
-project(PipeRelayV2)
+project(PcapReleay)
 
 
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES  main.cpp PipeRelay/Writer/PipeWriter.cpp PipeRelay/Writer/PipeWriter.h PipeRelay/Reader/PipeReader.cpp
-        PipeRelay/Reader/PipeReader.h Loging/Log.h Loging/Log.cpp PipeRelay/PipeHandler.h PipeRelay/Pipehandler.cpp
-        PipeRelay/ssh/ReadConfig.h PipeRelay/ssh/Ssh.cpp PipeRelay/ssh/Ssh.h PipeRelay/ssh/ReadConfig.cpp
-        PipeRelay/BaseReader.cpp PipeRelay/BaseReader.h PCAP/LinuxEncalsulation.cpp PCAP/LinuxEncalsulation.h PCAP/PCAP.cpp PCAP/PCAP.h PCAP/PCAPHistory.cpp PCAP/PCAPHistory.h PCAP/IO/Writer/PCAPWriter.cpp PCAP/IO/Writer/PCAPWriter.h PCAP/IO/Reader/Pipe/PCAPPipeReader.cpp PCAP/IO/Reader/Pipe/PCAPPipeReader.h PCAP/IO/Reader/SSH/PCAPSSHReader.h PCAP/IO/Reader/SSH/PCAPSSHReader.cpp PCAP/IO/Reader/BasePCAPReader.cpp PCAP/IO/Reader/BasePCAPReader.h)
+set(SOURCE_FILES  main.cpp PipeRelay/PipeRelay/Writer/PipeWriter.cpp PipeRelay/PipeRelay/Writer/PipeWriter.h PipeRelay/PipeRelay/Reader/PipeReader.cpp
+        PipeRelay/PipeRelay/Reader/PipeReader.h Loging/Log.h Loging/Log.cpp PipeRelay/PipeRelay/PipeHandler.h PipeRelay/PipeRelay/Pipehandler.cpp
+        PipeRelay/PipeRelay/ssh/ReadConfig.h PipeRelay/PipeRelay/ssh/Ssh.cpp PipeRelay/PipeRelay/ssh/Ssh.h PipeRelay/PipeRelay/ssh/ReadConfig.cpp
+        PipeRelay/PipeRelay/BaseReader.cpp PipeRelay/PipeRelay/BaseReader.h PCAP/LinuxEncalsulation.cpp PCAP/LinuxEncalsulation.h PCAP/PCAP.cpp PCAP/PCAP.h PCAP/PCAPHistory.cpp PCAP/PCAPHistory.h PCAP/IO/Writer/PCAPWriter.cpp PCAP/IO/Writer/PCAPWriter.h PCAP/IO/Reader/Pipe/PCAPPipeReader.cpp PCAP/IO/Reader/Pipe/PCAPPipeReader.h PCAP/IO/Reader/SSH/PCAPSSHReader.h PCAP/IO/Reader/SSH/PCAPSSHReader.cpp PCAP/IO/Reader/BasePCAPReader.cpp PCAP/IO/Reader/BasePCAPReader.h)
 
 
 
-add_executable(PipeRelayV2 ${SOURCE_FILES} )
+add_executable(PcapReleay ${SOURCE_FILES} )
 
-target_link_libraries(PipeRelayV2  pthread)
+target_link_libraries(PcapReleay  pthread)

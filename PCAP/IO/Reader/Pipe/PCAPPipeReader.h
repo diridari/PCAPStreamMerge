@@ -6,7 +6,7 @@
 #define PIPERELAYV2_PCAPREADER_H
 
 
-#include "../../../../Pipe-Relay/PipeRelay/Reader/PipeReader.h"
+#include "../../../../PipeRelay/PipeRelay/Reader/PipeReader.h"
 #include "../../../PCAP.h"
 #include "../../Writer/PCAPWriter.h"
 #include "../BasePCAPReader.h"

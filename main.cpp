@@ -1,12 +1,8 @@
-
 //
 // Created by Sebastian Balz  on 1/13/17.
 //
 
 
-#include <search.h>
-#include "main.h"
-#include "PipeRelay/Reader/PipeReader.h"
 
 
 using namespace std;
@@ -19,7 +15,6 @@ using namespace std;
  * this application has the goal to connect several ingoing pipes with one outgoing pipe
  * The ingoing pipes are filled with remote captured from several probes. Each probes data is stored in one singe named pipe.
  * The data of each probe can be grabbed by an ssh connection witch is piping the tcpdump-data the named pipe
-
  * Wireshark e.g is able the read data from a singe named pipe,
  * but if there is more than on probe, the data of each probe has to be bundled to a singe outgoing pipe witch can be captured
  * by Wireshark or by an other application
@@ -39,17 +34,19 @@ using namespace std;
  * - remoteSetup
  */
 #include <unistd.h>
+#include "main.h"
+#include "PipeRelay/PipeRelay/Reader/PipeReader.h"
+#include "PCAP/IO/Reader/Pipe/PCAPPipeReader.h"
 
 
 int main(int argc, char *argv[]) {
 
-
     configuration(argc,argv); // read parameter
 
     // open Writer
-
-    wr = new PipeWriter(new string(location + "Out"), new string("PipeWriter"));
-
+    (new string(location + "Out"), new string("PipeWriter"),(historyTime != 0),historyTime);
+    pw = new PipeWriter(&location,new string("PipeWriter"));
+    wr = new PCAPWriter(pw,"PCAPWriter",(historyTime != 0),historyTime);
     wr->open();
 
     // open ssh
@@ -63,7 +60,7 @@ int main(int argc, char *argv[]) {
     sleep(1);
 
     // wait for finish
-    for(int i = 0; i<l->size(); i++){
+    for(uint i = 0; i<l->size(); i++){
         l->at(i)->join();
     }
     return 0;
@@ -72,31 +69,11 @@ int main(int argc, char *argv[]) {
 
 
 
-void handleSSH(string s){
-    Log::message("main","open ssh with config file: \t" +s,1);
 
-
-    ReadConfig *r = new ReadConfig(&s);
-    r->open();
-
-    while(r->hasNext()){
-        ReadConfig::entry *entry = r->getNextValid();
-
-        Log::message("main","establish new ssh conection to : \033[1;34m"+entry->client+ "\033[0m   with the user : \033[1;34m"
-                            +entry->user +"\033[0m   and run there : [ \033[1;34m" + entry->execute+"\033[0m ]",1);
-        ssh *s = new ssh(entry,wr);
-        delete entry;
-        l->push_back(new thread(startSSHReader, s));
-    }
-
-
-
-}
 void handleNamedPipe(int numberOfThreads){
     Log::message("main",("cread " + to_string(numberOfThreads )+" named pipes" ),1);
 
     threadStartPipe *w;
-    thread *list[numberOfThreads];
 
     // creat all threads
     for(int i = 0; i <numberOfThreads; i++) {
@@ -115,31 +92,50 @@ void handleNamedPipe(int numberOfThreads){
 
 void startPipeReader(threadStartPipe *w){
     Log::message("main:pipe","startThread",2);
-    PipeReader *r = new PipeReader(w->location,w->outWriter,w->name,w->message, w->log);
+    //  PCAPPipeReader *r = new PipeReader(w->location,w->outWriter,w->name,w->message, w->log);
+    //PipeReader *pr = new PipeReader(w->location, new string("pipe"+ *w->name),w->message,w->log);
+    PCAPPipeReader *r = new PCAPPipeReader(*w->location,*w->name,wr);
     r->open();
-    while(true){
-        char c;
-        r->read(&c,1);
-        wr->write(&c,1);
-    }
+    r->run();
     Log::message("main:pipe", "\t\t"+ *w->name+ "    : leaf",1);
     delete w;
     delete r;
     return;
 }
 
-void startSSHReader(ssh *s){
 
-        Log::message("main:ssh","startThread",2);
-        s->open();
-    while(true){
-        char c;
-        s->read(&c,1);
-       wr->write(&c,1);
+void handleSSH(string s){
+    Log::message("main","open ssh with config file: \t" +s,1);
+
+
+    ReadConfig *r = new ReadConfig(&s);
+    r->open();
+
+    while(r->hasNext()){
+        ReadConfig::entry *entry = r->getNextValid();
+
+        Log::message("main","establish new ssh conection to : \033[1;34m"+entry->client+ "\033[0m   with the user : \033[1;34m"
+                            +entry->user +"\033[0m   and run there : [ \033[1;34m" + entry->execute+"\033[0m ]",1);
+
+        PCAPSSHReader *pcapssh = new PCAPSSHReader(wr, "ssh to "+entry->client,entry);
+        l->push_back(new thread(startSSHReader, pcapssh));
+
     }
 
 
 
+}
+void startSSHReader(PCAPSSHReader *s){
+    if (remoteSetup) {
+        if (!s->runConfig(channel, "phy0", "wpan0")) {
+            cerr << "error while setup" << endl;
+        }
+    }
+    {
+        Log::message("main:ssh","startThread",2);
+        s->open();
+        s->run();
+    }
     delete s;
 }
 
@@ -149,7 +145,11 @@ void  printUsage(){
         <<"\n\t[-ssh <configfile> ] \t\tread config file  "
         <<"\n\t[-pipe <nuberOf>]    \t\topen <numberOf named pipes und store them at <location>"
         <<"\n\t[-l <location>]      \t\tchange the default location to <location> and apend In and Out<n>"
+        <<"\n\t[-ch <channel>       \t\tset the Channel (default: 26) just used by -ssh"
         <<"\n\t[-log <loglevel>]    \t\tset loglevel default : 0"
+        <<"\n\t[-history <time>]    \t\tenables the pcap history"
+        <<"\n\t[-encap]             \t\tset to disable the removing of the Linux Cooked Encapsulation "
+        <<"\n\t[-noRemoteSetup]     \t\tdisable the setup of the ssh device before executing the remote command"
         <<"\033[0m"<<endl;
 
     exit(-1);
@@ -181,13 +181,21 @@ void configuration(int numberOfArg, char *argv[]) {
             doPipe = true;
         } else if (*s == "-l" & hasNext)
             location = string(argv[i + 1]);
+        else if (*s == "-ch")
+            channel = argv[i + 1];
         else if (*s == "-h")
             printUsage();
         else if (*s == "-log")
             Log::setPrio(atoi(argv[i + 1]));
         else if (*s == "-history")
-            Log::setPrio(atoi(argv[i + 1]));
-       else
+            historyTime = atoi(argv[i + 1]);
+        else if (*s == "-encap") {
+            LinuxEncalsulation::setNoEncapsulation();
+            i--;
+        } else if (*s == "-noRemoteSetup") {
+            remoteSetup = false;
+            i--;
+        } else
             wrongsage();
     }
     if (!(doPipe || doSSH)) {
@@ -195,4 +203,3 @@ void configuration(int numberOfArg, char *argv[]) {
         Log::message("main", "there was no input configuration -> 2 pipes", 2);
     }
 }
-

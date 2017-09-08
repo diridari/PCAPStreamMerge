@@ -10,7 +10,7 @@ The Host request the tcpdump(or a other pcap source) from the Clients and
 
 This application is based on Pipe-Relay wich was written to combine several ingoing pipes to one outgoing pipe.
 
-![Alt text](pic/img.png?raw=true "structure")
+![Alt text](pic/img.PNG?raw=true "structure")
 
 ***
 ## How to use

@@ -37,7 +37,7 @@ void writer(PCAPWriter *pcw) {
 }
 
 
-void PipeFiller(string loc, int numberOfPCAPs) {
+void PipeFillerWithDelay(string loc, int numberOfPCAPs, int deleyPerByte = 1) {
     ofstream *f = new ofstream();
     f->open(loc);
 
@@ -48,12 +48,15 @@ void PipeFiller(string loc, int numberOfPCAPs) {
         for (int x = 0; x < sizeof(pcapF); x++) {
             f->put(pcapF[x]);
             f->flush();
-            usleep(1);
+            del = random()&deleyPerByte;
+            usleep(del);
 
         }
     }
 }
-
+void PipeFiller(string loc, int numberOfPCAPs){
+    PipeFillerWithDelay(loc,numberOfPCAPs,1);
+}
 TEST(shall, ok) {
     ASSERT_EQ(1, 1);
 }
@@ -119,7 +122,7 @@ TEST(integrationTEst, twoReader) {
 }
 
 
-TEST(integrationTEst, twoReaderSeveralPcaps) {
+TEST(integrationTEst, manyReader) {
     Log::setPrio(-1);
     LinuxEncalsulation::setNoEncapsulation();
     PipeWriter *pw = new PipeWriter(new string("/tmp/testWr"));
@@ -139,7 +142,7 @@ TEST(integrationTEst, twoReaderSeveralPcaps) {
 
     thread filler(PipeFiller, "/tmp/testReader0", 100);
     thread filler2(PipeFiller, "/tmp/testReader1", 100);
-    thread filler3(PipeFiller, "/tmp/testReader2", 100);
+    thread filler3(PipeFiller, "/tmp/testReader2", 1000);
     thread filler1(PipeFiller, "/tmp/testReader3", 100);
     thread filler4(PipeFiller, "/tmp/testReader4", 100);
     thread filler5(PipeFiller, "/tmp/testReader5", 100);
@@ -168,3 +171,99 @@ TEST(integrationTEst, twoReaderSeveralPcaps) {
 }
 
 
+TEST(integrationTEst, manyManyReader) {
+    Log::setPrio(-1);
+    LinuxEncalsulation::setNoEncapsulation();
+    PipeWriter *pw = new PipeWriter(new string("/tmp/testWr"));
+    PCAPWriter *pcw = new PCAPWriter(pw, "testWriter");
+    thread *t = new thread(writer, pcw);
+    usleep(10000);
+    ifstream *in = new ifstream();
+    in->open("/tmp/testWr");
+    usleep(10000);
+    thread *r1 = new thread(reader, "/tmp/testReader0", pcw);
+    thread *r2 = new thread(reader, "/tmp/testReader1", pcw);
+    thread *r3 = new thread(reader, "/tmp/testReader2", pcw);
+    thread *r6 = new thread(reader, "/tmp/testReader3", pcw);
+    thread *r4 = new thread(reader, "/tmp/testReader4", pcw);
+    thread *r5 = new thread(reader, "/tmp/testReader5", pcw);
+    usleep(10000);
+
+    thread filler(PipeFiller, "/tmp/testReader0", 1000);
+    thread filler2(PipeFiller, "/tmp/testReader1", 1000);
+    thread filler3(PipeFiller, "/tmp/testReader2", 1000);
+    thread filler1(PipeFiller, "/tmp/testReader3", 1000);
+    thread filler4(PipeFiller, "/tmp/testReader4", 1000);
+    thread filler5(PipeFiller, "/tmp/testReader5", 1000);
+    thread filler6(PipeFiller, "/tmp/testReader6", 1000);
+
+    filler.join();
+    filler1.join();
+    filler2.join();
+    filler3.join();
+    filler4.join();
+    filler5.join();
+    filler6.join();
+
+    for (int i = 0; i < sizeof(pcapFileHEader); i++) {
+        char c = in->get();
+        ASSERT_EQ((uint8_t) c, (uint8_t) pcapFileHEader[i]);
+    }
+    for (int x = 0; x < 6000; x++) {
+        for (int i = 0; i < sizeof(pcapF); i++) {
+            char c = in->get() & 0xff;
+            ASSERT_EQ((uint8_t) c, (uint8_t) pcapF[i]);
+
+        }
+    }
+
+}
+
+
+TEST(integrationTEst, manyReaderHighDelay) {
+    Log::setPrio(-1);
+    LinuxEncalsulation::setNoEncapsulation();
+    PipeWriter *pw = new PipeWriter(new string("/tmp/testWr"));
+    PCAPWriter *pcw = new PCAPWriter(pw, "testWriter");
+    thread *t = new thread(writer, pcw);
+    usleep(10000);
+    ifstream *in = new ifstream();
+    in->open("/tmp/testWr");
+    usleep(10000);
+    thread *r1 = new thread(reader, "/tmp/testReader0", pcw);
+    thread *r2 = new thread(reader, "/tmp/testReader1", pcw);
+    thread *r3 = new thread(reader, "/tmp/testReader2", pcw);
+    thread *r6 = new thread(reader, "/tmp/testReader3", pcw);
+    thread *r4 = new thread(reader, "/tmp/testReader4", pcw);
+    thread *r5 = new thread(reader, "/tmp/testReader5", pcw);
+    usleep(10000);
+
+    thread filler(PipeFillerWithDelay, "/tmp/testReader0", 100,100);
+    thread filler2(PipeFillerWithDelay, "/tmp/testReader1", 100,100);
+    thread filler3(PipeFillerWithDelay, "/tmp/testReader2", 1000,100);
+    thread filler1(PipeFillerWithDelay, "/tmp/testReader3", 100,100);
+    thread filler4(PipeFillerWithDelay, "/tmp/testReader4", 100,100);
+    thread filler5(PipeFillerWithDelay, "/tmp/testReader5", 100,100);
+    thread filler6(PipeFillerWithDelay, "/tmp/testReader6", 100,100);
+
+    filler.join();
+    filler1.join();
+    filler2.join();
+    filler3.join();
+    filler4.join();
+    filler5.join();
+    filler6.join();
+
+    for (int i = 0; i < sizeof(pcapFileHEader); i++) {
+        char c = in->get();
+        ASSERT_EQ((uint8_t) c, (uint8_t) pcapFileHEader[i]);
+    }
+    for (int x = 0; x < 600; x++) {
+        for (int i = 0; i < sizeof(pcapF); i++) {
+            char c = in->get() & 0xff;
+            ASSERT_EQ((uint8_t) c, (uint8_t) pcapF[i]);
+
+        }
+    }
+
+}

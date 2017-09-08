@@ -24,7 +24,7 @@ set(SOURCE_FILESTest   PipeRelay/PipeRelay/Writer/PipeWriter.cpp PipeRelay/PipeR
         PipeRelay/PipeRelay/BaseReader.cpp PipeRelay/PipeRelay/BaseReader.h PCAP/LinuxEncalsulation.cpp PCAP/LinuxEncalsulation.h PCAP/PCAP.cpp PCAP/PCAP.h
         PCAP/PCAPHistory.cpp PCAP/PCAPHistory.h PCAP/IO/Writer/PCAPWriter.cpp PCAP/IO/Writer/PCAPWriter.h PCAP/IO/Reader/Pipe/PCAPPipeReader.cpp
         PCAP/IO/Reader/Pipe/PCAPPipeReader.h PCAP/IO/Reader/SSH/PCAPSSHReader.h PCAP/IO/Reader/SSH/PCAPSSHReader.cpp PCAP/IO/Reader/BasePCAPReader.cpp
-        PCAP/IO/Reader/BasePCAPReader.h Test/integration/integrationTest.cpp Test/historyTest.cpp Test/init.cpp Test/pcapTest.cpp)
+        PCAP/IO/Reader/BasePCAPReader.h Test/integration/integrationTest.cpp Test/historyTest.cpp Test/init.cpp Test/pcapTest.cpp Test/sshConfigTest.cpp)
 
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})

@@ -1,5 +1,5 @@
 not  valid
-8.8.8.8 user command x | call that as Setup
+8.8.8.8 user command x#call that as Setup
 unvalid too
 127.0.0.1 me isCool
 

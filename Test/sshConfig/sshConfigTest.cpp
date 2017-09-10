@@ -93,7 +93,7 @@ TEST(sshConfig, readRemoteSetup){
     ASSERT_EQ(e->client,"8.8.8.8" );
     ASSERT_EQ(e->user,"user" );
     ASSERT_EQ(e->execute,"command x" );
-    ASSERT_EQ(e->
+    ASSERT_EQ(e->setUp,"call that as Setup");
     ASSERT_TRUE(reader->hasNext());
     e = reader->getNextValid();
     ASSERT_EQ(e->client,"127.0.0.1" );

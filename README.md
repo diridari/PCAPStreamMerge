@@ -1,12 +1,14 @@
 # PCAP-Relay   
 ## Goal   
-This application has the goal to combine the traffic of several Network devices and combine them to one date Stream. This allows you to simplify the analytics and bug finding.
+This application has the goal to combine the traffic of several Network devices to one outgoing date stream. 
+This allows you to simplify the analytics and bug finding of mesh-networks.
 
-You may use this application if you develop IEE 802.15.4 (IoT) devices or other kinds of Mesh networks, where it is not possible to capture the whole Network.  
+You may use this application if you develop IEE 802.15.4 (IoT) devices or other kinds of Mesh networks,
+ where it is not possible to capture the whole network by one single sniffing-device.  
 
-This application has been written to enable sniffing a Mesh-Net where it is not possible to capture the whole network with just 
-one single Sniffer. 
-The Host request the tcpdump(or a other pcap source) from the Clients and 
+The Host request the tcpdump(or a other pcap source) from the Clients read and combine it.
+There are some basic filters witch allows to suppress double received packages e.g. if one datapackage has been captured by two 
+sniffers.
 
 This application is based on Pipe-Relay wich was written to combine several ingoing pipes to one outgoing pipe.
 
@@ -17,12 +19,12 @@ This application is based on Pipe-Relay wich was written to combine several ingo
 start the programm from the cli. 
 you can user these parameter:
             
-                    -ssh <configfileName/location>      read config file  
+                    -ssh <configfileName/location>      connect to ssh clients with the givven config
                     -pipe <nuberOf>                     open <numberOf named pipes und store them at <location>
-                    -l <location>                       change the default location to <location> and apend In and Out<n>
+                    -l <location>                       change the default location to <location> and apend In and Out<n> default is /tmp/pip /tmp/pipeRelay
                     -ch <channel>                       set the Channel (default: 26) just used by -ssh
-                    -log <loglevel>                     set loglevel default : 0
-                    -history <time>                     enables the pcap history
+                    -log <loglevel>                     set loglevel default : 0     the higher to more info you get 
+                    -history <time>                     enables the pcap history     time in ms 
                     -encap                              set to disable the removing of the Linux Cooked Encapsulation 
                     -noRemoteSetup                      disable the setup of the ssh device before executing the remote command
 
@@ -38,17 +40,19 @@ you can user these parameter:
    the solution in this case is to remove this encapsulation Header and change the pcap-linkylaer to a 6lowpan one.
    By default this feature is enabled.
    
-   If you want to connect to a remote device via SSH it recommended to enable a password less connection with public/private key as authentication. 
+   If you want to connect to a remote device via SSH it recommended to enable a password less connection with 
+   public/private key as authentication. 
 
 ***
 ## How it work's
-The application open one outgoing pipe which get filled with the combined ingoing traffic (the program blocks until the pipe has a reading end).    
+The application open one outgoing pipe which get filled with the combined ingoing traffic (the program blocks until 
+the pipe has a reading end).    
 Then for each target device(named pipe at the local machine or remote with SSH) the program opens one tunnel.   
 * if the device is a named pipe: the content  be pcap
 * if the device is a SSH connection: the application connect to the devices defined in the config file.
 ### Config-File
-If the application shall run in ssh mod the user has to define an config file where the app can read witch clients to connect,
-and witch applications shall run at the remote client.   
+If the application shall run in ssh mod the user has to define an config file where the app can read witch clients to 
+connect,and witch applications shall run at the remote client.   
 The config file has following definitions:   
 - each entry stands in its own line
 - an space(' ') separate the entry-parts
@@ -109,7 +113,8 @@ Each reader shall run in an singe thread
 ### Writer
 Pipewriter is the writing part of this application.
 There is one writer. 
-Each reader thread sends its pcap data to this writer. The methods writer (pcap) and write (byte[], size) are protected by an mutex witch prevent simultaneous writing by differned threads 
+Each reader thread sends its pcap data to this writer. The methods writer (pcap) and write (byte[], size) are 
+protected by an mutex witch prevent simultaneous writing by differned threads 
 -   Constructor
 
         writer(location, name , message, log)

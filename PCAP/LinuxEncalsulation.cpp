@@ -7,7 +7,7 @@
 
 static bool  noLinuxCookEncapsulation = true;   // if the network Protocol is not knowen to Linux it use an encapsulation Protocal
 
-bool LinuxEncalsulation::noEncapsulation() { return noLinuxCookEncapsulation; }
+bool LinuxEncalsulation::getEncapsulation() { return noLinuxCookEncapsulation; }
 
 
-void  LinuxEncalsulation::setNoEncapsulation() { noLinuxCookEncapsulation = false;}
+void  LinuxEncalsulation::setNoEncapsulation(bool set) { noLinuxCookEncapsulation = set;}

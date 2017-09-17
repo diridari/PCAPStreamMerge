@@ -17,14 +17,15 @@ public:
       but this encapsulation prococol canot be decoded by foren6
    * @return shall der be no encapsulation
    */
-    static bool noEncapsulation();
+    static bool getEncapsulation();
 
     /**
      * set the Flag if the Linux Coocked encalsulation shall be cutout
      *
      * @param set true = cut out
+     *          false = let encap Header in the pcap
      */
-    static void setNoEncapsulation() ;
+    static void setNoEncapsulation(bool set = false) ;
 
 
 };

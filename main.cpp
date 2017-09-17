@@ -139,12 +139,11 @@ void startSSHReader(PCAPSSHReader *s){
     delete s;
 }
 
-
 void  printUsage(){
     cout<<"usage:\t\033[1;32m"
-        <<"\n\t[-ssh <configfile> ] \t\tread config file  "
+        <<"\n\t[-ssh <configfile> ] \t\tconnect to ssh clients with the givven config"
         <<"\n\t[-pipe <nuberOf>]    \t\topen <numberOf named pipes und store them at <location>"
-        <<"\n\t[-l <location>]      \t\tchange the default location to <location> and apend In and Out<n>"
+        <<"\n\t[-l <location>]      \t\tchange the default location to <location> and apend In and Out<n> default is /tmp/pip /tmp/pipeRelay"
         <<"\n\t[-ch <channel>       \t\tset the Channel (default: 26) just used by -ssh"
         <<"\n\t[-log <loglevel>]    \t\tset loglevel default : 0"
         <<"\n\t[-history <time>]    \t\tenables the pcap history"
@@ -161,12 +160,8 @@ void wrongsage(){
     printUsage();
     exit(-1);
 }
-/*
- * -ssh configFile
- * -pipe number
- * -ch channel
- * -l location
- */
+
+
 void configuration(int numberOfArg, char *argv[]) {
 
     Log::message("main", "read configuration", 3);

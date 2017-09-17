@@ -48,13 +48,13 @@ public:
     * @param buffer  array to write to out pipe size <pcap.FileHeaderSize>
     */
     void writePCAPFileHeader(char *buff){
-        //mutex1.lock();
+        mutex1.lock();
         if(!hasPCAPHeader){
             writer->write(buff,pcap::FileHeaderSize);
             hasPCAPHeader = true;
             Log::message(name,"write PCAP file header to outgoing pipe",2);
         }
-       // mutex1.unlock();
+        mutex1.unlock();
 
     }
 
@@ -64,14 +64,14 @@ public:
      * this add(in case its not written jet)mutex protectet the file header to the OutPipe
      */
     void writePCAPFileHeader(char *buff1, int size1, char *buff2, int size2){
-       // mutex1.lock();
+        mutex1.lock();
         if(!hasPCAPHeader){
             writer->write(buff1,size1);
             writer->write(buff2,size2);
             hasPCAPHeader = true;
             Log::message(name,"write PCAP file header to outgoing pipe",2);
         }
-       // mutex1.unlock();
+        mutex1.unlock();
     }
 
     /**

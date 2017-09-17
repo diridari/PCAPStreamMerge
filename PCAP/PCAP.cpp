@@ -20,7 +20,7 @@ int pcap::append(char c) {
             pcapStruct->sizeOfPacket[position] = c;
             position ++;
             if(position == pcapSizeSize){// end of package
-                if(LinuxEncalsulation::noEncapsulation()) {
+                if(LinuxEncalsulation::getEncapsulation()) {
 
                     pcapStruct->sizeOfPacket[0] = pcapStruct->sizeOfPacket[0] - (char) 16;
                   //  cout << "snipp size"<<endl;
@@ -35,7 +35,7 @@ int pcap::append(char c) {
                 pcapStruct->sizeOfPayload[position] = c;
                 position++;
                 if (position == pcapSizeSize) { // end of payload
-                    if(LinuxEncalsulation::noEncapsulation())
+                    if(LinuxEncalsulation::getEncapsulation())
                         pcapStruct->sizeOfPayload[0] = pcapStruct->sizeOfPayload[0] -(char)16;
                     //cout <<" finish Header"<<endl;
                     isHeader = false;
@@ -47,12 +47,12 @@ int pcap::append(char c) {
 
         }
     }else{
-        if(position > pcapStruct->intSize) {
+        if(position >= pcapStruct->intSize) {
             //cout <<" Error Payload"<<endl;
             isComplead = false;
             return -1;
         }
-        if(LinuxEncalsulation::noEncapsulation() && encapsulationCounter < LinuxEncalsulationSize) {
+        if(LinuxEncalsulation::getEncapsulation() && encapsulationCounter < LinuxEncalsulationSize) {
             encapsulationCounter++;
             //cout << "cutout"<<endl;
         }

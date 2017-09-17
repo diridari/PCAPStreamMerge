@@ -61,7 +61,7 @@ TEST(shall, ok) {
     ASSERT_EQ(1, 1);
 }
 
-TEST(integrationTEst, oneReader) {
+TEST(integrationTest, oneReader) {
     Log::setPrio(-1);
     LinuxEncalsulation::setNoEncapsulation();
     PipeWriter *pw = new PipeWriter(new string("/tmp/testWr"));
@@ -87,7 +87,7 @@ TEST(integrationTEst, oneReader) {
 
 }
 
-TEST(integrationTEst, twoReader) {
+TEST(integrationTest, twoReader) {
     Log::setPrio(-1);
     LinuxEncalsulation::setNoEncapsulation();
     PipeWriter *pw = new PipeWriter(new string("/tmp/testWr"));
@@ -122,7 +122,7 @@ TEST(integrationTEst, twoReader) {
 }
 
 
-TEST(integrationTEst, manyReader) {
+TEST(integrationTest, manyReader) {
     Log::setPrio(-1);
     LinuxEncalsulation::setNoEncapsulation();
     PipeWriter *pw = new PipeWriter(new string("/tmp/testWr"));
@@ -171,7 +171,7 @@ TEST(integrationTEst, manyReader) {
 }
 
 
-TEST(integrationTEst, manyManyReader) {
+TEST(integrationTest, manyManyReader) {
     Log::setPrio(-1);
     LinuxEncalsulation::setNoEncapsulation();
     PipeWriter *pw = new PipeWriter(new string("/tmp/testWr"));
@@ -220,7 +220,7 @@ TEST(integrationTEst, manyManyReader) {
 }
 
 
-TEST(integrationTEst, manyReaderHighDelay) {
+TEST(integrationTest, manyReaderHighDelay) {
     Log::setPrio(-1);
     LinuxEncalsulation::setNoEncapsulation();
     PipeWriter *pw = new PipeWriter(new string("/tmp/testWr"));

@@ -4,6 +4,11 @@
 #include <gtest/gtest.h>
 
 
+/*
+ * Just some basic test
+ * the most important test are the integration Test
+ */
+
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);

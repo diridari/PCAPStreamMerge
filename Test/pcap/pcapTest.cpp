@@ -51,7 +51,7 @@ TEST(pcap, pcapPayload) {
 
 }
 
-TEST(pcap, AppenTooMuch) {
+TEST(pcap, AppendTooMuch) {
 
     pcap *p = new pcap();
     LinuxEncalsulation::setNoEncapsulation();
@@ -69,9 +69,7 @@ TEST(pcap,encapsulation){
     LinuxEncalsulation::setNoEncapsulation(true);
     uint8_t pcapEnd[] = {0x0,0x1,0x2,0x3,4,5,6,7,8,9,10,11,12,13,14,15}; // random struff
     pcap *p = new pcap();
-
-
-
+    
     for(int i = 0; i< sizeof(encap);i++){
         ASSERT_EQ(p->append(encap[i]),0);
     }

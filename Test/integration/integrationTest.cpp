@@ -2,7 +2,8 @@
 // Created by basto on 9/3/17.
 //
 
-#include "../../PipeRelay/PipeRelay/Writer/PipeWriter.h"
+
+#include <PipeWriter.h>
 #include "../../include/IO/Writer/PCAPWriter.h"
 #include "../../include/IO/Reader/PCAPPipeReader.h"
 #include "../../include/LinuxEncalsulation.h"

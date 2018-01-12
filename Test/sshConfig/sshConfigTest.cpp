@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include <search.h>
-#include "../../PipeRelay/PipeRelay/ssh/ReadConfig.h"
+#include <ReadConfig.h>
 TEST(sshConfig,readEmptyConfig){
 // Problem : where is the file located...
     // for me the exec file is in cmake-build dir

@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.6)
 project(PcapReleay)
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES  main.cpp  PCAP/LinuxEncalsulation.cpp include/LinuxEncalsulation.h PCAP/PCAP.cpp include/PCAP.h
-        PCAP/PCAPHistory.cpp include/PCAPHistory.h PCAP/IO/Writer/PCAPWriter.cpp include/IO/Writer/PCAPWriter.h PCAP/IO/Reader/Pipe/PCAPPipeReader.cpp
-        include/IO/Reader/PCAPPipeReader.h include/IO/Reader/PCAPSSHReader.h PCAP/IO/Reader/SSH/PCAPSSHReader.cpp PCAP/IO/Reader/BasePCAPReader.cpp
+set(SOURCE_FILES  main.cpp src/LinuxEncalsulation.cpp include/LinuxEncalsulation.h src/PCAP.cpp include/PCAP.h
+        src/PCAPHistory.cpp include/PCAPHistory.h src/IO/Writer/PCAPWriter.cpp include/IO/Writer/PCAPWriter.h src/IO/Reader/Pipe/PCAPPipeReader.cpp
+        include/IO/Reader/PCAPPipeReader.h include/IO/Reader/PCAPSSHReader.h src/IO/Reader/SSH/PCAPSSHReader.cpp src/IO/Reader/BasePCAPReader.cpp
         include/IO/Reader/BasePCAPReader.h)
 
 
@@ -25,9 +25,9 @@ target_link_libraries(PcapReleay PipeRelay.a pthread)
 
 
 
-set(SOURCE_FILESTest    PCAP/LinuxEncalsulation.cpp include/LinuxEncalsulation.h PCAP/PCAP.cpp include/PCAP.h
-        PCAP/PCAPHistory.cpp include/PCAPHistory.h PCAP/IO/Writer/PCAPWriter.cpp include/IO/Writer/PCAPWriter.h PCAP/IO/Reader/Pipe/PCAPPipeReader.cpp
-        include/IO/Reader/PCAPPipeReader.h include/IO/Reader/PCAPSSHReader.h PCAP/IO/Reader/SSH/PCAPSSHReader.cpp PCAP/IO/Reader/BasePCAPReader.cpp
+set(SOURCE_FILESTest src/LinuxEncalsulation.cpp include/LinuxEncalsulation.h src/PCAP.cpp include/PCAP.h
+        src/PCAPHistory.cpp include/PCAPHistory.h src/IO/Writer/PCAPWriter.cpp include/IO/Writer/PCAPWriter.h src/IO/Reader/Pipe/PCAPPipeReader.cpp
+        include/IO/Reader/PCAPPipeReader.h include/IO/Reader/PCAPSSHReader.h src/IO/Reader/SSH/PCAPSSHReader.cpp src/IO/Reader/BasePCAPReader.cpp
         include/IO/Reader/BasePCAPReader.h Test/integration/integrationTest.cpp Test/pcap/historyTest.cpp Test/init.cpp Test/pcap/pcapTest.cpp Test/sshConfig/sshConfigTest.cpp)
 
 

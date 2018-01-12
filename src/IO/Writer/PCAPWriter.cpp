@@ -33,7 +33,7 @@ void PCAPWriter::write(pcap::PCAP * pcap) {
     }
     Log::message(name,"lock mutex",3);
     mutex1.lock();  // set mutex
-    Log::message(name,"write PCAP",3);
+    Log::message(name,"write src",3);
 
     if(!(avoidDuplicates && history->IsInList(pcap))) {  // avoid duplicate pcap's
         writerToOfstream(pcap, writer);

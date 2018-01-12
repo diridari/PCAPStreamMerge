@@ -9,7 +9,7 @@
 #include <Ssh.h>
 #include "../../../../include/IO/Reader/PCAPSSHReader.h"
 
-bool PCAPSSHReader::runConfig(string channel, string phy, string wpan) {
+bool PCAPSSHReader::runConfigIWPAN(string channel, string phy, string wpan) {
 
     string t = "ssh -q " + config->user +"@"+config->client + " 'sudo /etc/IEEE-Sniffer/remoteSetup/setup.sh "
                + phy + " " + " " + wpan + " " + channel + " '";
@@ -28,5 +28,13 @@ bool PCAPSSHReader::runConfig(string channel, string phy, string wpan) {
         Log::message(("ssh config " + config->client),("set up client-config to channel " +channel  +" succeed ") ,2);
     return isSucess;
 
+}
+
+void  PCAPSSHReader::executeCommand(string command) {
+    FILE *setUp;
+    string t = "ssh -q " + config->user +"@"+config->client + " 'sudo " + command + "'";
+    Log::message(("ssh config " + config->client),(" : " +t) ,2);
+    setUp = popen((t.c_str()), "r");
+    pclose(setUp);
 }
 

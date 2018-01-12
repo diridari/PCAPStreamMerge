@@ -16,8 +16,8 @@ using namespace std;
 /*
 static bool FIRSTPIPEISOPEN = false;
 static std::mutex readerMutex;          // mutex : wird der Reader gerade verwendent
-static bool firstPcapSend = false;      // wurde bereits ein PCAP paket gesendet  wird genötigt um den Timstamp zu verifizieren
-static char firstTimeStamp[8] = {};     // timestamp des ersten PCAP paketes
+static bool firstPcapSend = false;      // wurde bereits ein src paket gesendet  wird genötigt um den Timstamp zu verifizieren
+static char firstTimeStamp[8] = {};     // timestamp des ersten src paketes
 *(
 
 /**

@@ -24,15 +24,7 @@ using namespace std;
  * Each ingoing pipe has an Thread witch is reader pcap package. If the pcap is completely read, the thread sends the pcap to the outgoing pipe
  * to avoid simultaneous writes to the outgoing pipe each write is locked with an mutex
  */
-/*
- * - ssh configFile
- * - pipe number
- * - ch channel
- * - location
- * - log loglevel
- * - encap
- * - remoteSetup
- */
+
 #include <unistd.h>
 #include "main.h"
 
@@ -126,10 +118,14 @@ void handleSSH(string s){
 
 }
 void startSSHReader(PCAPSSHReader *s){
-    if (remoteSetup) {
-        if (!s->runConfig(channel, "phy0", "wpan0")) {
+    if (remoteSetupIWPAN) {
+        if (!s->runConfigIWPAN(channel, "phy0", "wpan0")) {
             cerr << "error while setup" << endl;
         }
+    }
+    if(remoteSetup){
+        Log::message("main","send ssh setupt" ,2);
+        s->executeCommand(remoteSetupCommand);
     }
     {
         Log::message("main:ssh","startThread",2);
@@ -148,7 +144,10 @@ void  printUsage(){
         <<"\n\t[-log <loglevel>]    \t\tset loglevel default : 0"
         <<"\n\t[-history <time>]    \t\tenables the pcap history"
         <<"\n\t[-encap]             \t\tset to disable the removing of the Linux Cooked Encapsulation "
-        <<"\n\t[-noRemoteSetup]     \t\tdisable the setup of the ssh device before executing the remote command"
+        <<"\n\t[-remoteSetup < \"command  list of Param\">] \t\texecuting a script a the remote device if you add a \" "
+                << "infront of the command and at its end everything inside gets send"
+        <<"\n\t[-remoteSetupIWPAN]   \t\tenables the setup of the ssh device with before executing the remote command"
+
         <<"\033[0m"<<endl;
 
     exit(-1);
@@ -187,10 +186,41 @@ void configuration(int numberOfArg, char *argv[]) {
         else if (*s == "-encap") {
             LinuxEncalsulation::setNoEncapsulation();
             i--;
-        } else if (*s == "-noRemoteSetup") {
-            remoteSetup = false;
+        } else if (*s == "-remoteSetup") {
+
+            remoteSetup = true;
+            string buildCommand = "";
+            if(i + 1 >= numberOfArg){
+                cerr<< "got more arguments with ssh command that expected do you have forgotten the \""<<endl;
+            }
+            buildCommand = argv[i + 1];
+            if(buildCommand.at(0) ==  '\"' && buildCommand.at(buildCommand.length()-1 ) != '\"' ){
+                buildCommand.front() = ' '; // remote "
+
+                bool foundEnd = false;
+                int pos = 2;
+               while(!foundEnd){
+                    pos ++;
+                   i++;
+                   if(i + pos >= numberOfArg){
+                       cerr<< "got more arguments with ssh command that expected do you have forgotten the \""<<endl;
+                   }
+                   string nxt = argv[i + pos];
+
+                   if(nxt.at(nxt.length()-1) == '\"'){
+                       nxt.back() = ' ';  // remote " at the end
+                       foundEnd = true;
+                   }
+                   buildCommand += nxt;
+                }
+            }
+            remoteSetupCommand = buildCommand;
+            cout <<" command : "<< remoteSetupCommand <<endl;
+        }else if (*s == "-remoteSetupIWPAN") {
+            remoteSetupIWPAN = true;
             i--;
-        } else
+        }
+        else
             wrongsage();
     }
     if (!(doPipe || doSSH)) {

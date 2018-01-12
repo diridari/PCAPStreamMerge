@@ -30,7 +30,7 @@ bool PCAPHistory::addTOList(size_t hash) {
     time_t time = ms.count();
     if(time == -1)
         return false;
-    Log::message("PCAP History"," add package to history",3);
+    Log::message("src History"," add package to history",3);
     vector->insert(vector->begin(), new myHash(hash,time));
     return true;
 }
@@ -45,7 +45,7 @@ void PCAPHistory::removeFromList(size_t hash) {
 
 }
 bool PCAPHistory::removeFromList(int index) {
-    Log::message("PCAP History" ,"delete package to history",3);
+    Log::message("src History" ,"delete package to history",3);
    myHash *that = vector->at(index);
     vector->erase(vector->begin() + index);
     delete that;

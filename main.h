@@ -34,14 +34,16 @@ string location = "/tmp/pipeRelay";     // default location
 string configFile = "";                 // location of the config File
 string channel = "26";                  // default channel
 bool doSSH = false;                     // shall the program connect via ssh to the clients (config file)
-bool remoteSetup = true;                // shall the program trigger the remoteSetup
+bool remoteSetup = false;                // shall the program trigger the remoteSetup
+bool remoteSetupIWPAN = false;
+string remoteSetupCommand = "";
 bool doPipe = false;                    // Shall the program create named Pipes
 
 uint historyTime = 0;                    // history time
 int numberOfPipes = 0;                  // number of named Pipes
 vector<thread*> *l = new vector<thread*>(); // list of all Threads
 
-PCAPWriter *wr;                         // writing end of the program PCAP
+PCAPWriter *wr;                         // writing end of the program src
 PipeWriter *pw;                          // pipe Writer
 /**
  * this function shall run in an thread and describe the life of the thread

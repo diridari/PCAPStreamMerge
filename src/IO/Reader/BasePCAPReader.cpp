@@ -50,15 +50,15 @@ void BasePCAPReader::run() {
     }
 
 
-    Log::message(name,"Found File Header --> goto PCAP packages",2);
+    Log::message(name,"Found File Header --> goto src packages",2);
 
     while(reader->hasNext()){
 
         if(!nextPCAP()){
-            Log::message(name,"PCAP maye be invalid \t \t     >_< ",1 );
+            Log::message(name,"src maye be invalid \t \t     >_< ",1 );
         }
         else
-            Log::message(name,"found valid PCAP package ",3);
+            Log::message(name,"found valid src package ",3);
 
 
     }

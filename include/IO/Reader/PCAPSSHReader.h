@@ -28,7 +28,15 @@ public:
         * @param wpan name of the new interface
         * @return was the setup successfull
         */
-    bool runConfig(string channel,string phy = "phy0", string wpan = "wpan0");
+    bool runConfigIWPAN(string channel, string phy = "phy0", string wpan = "wpan0");
+
+    /**
+     * send a command to the SSH client
+     * the command gets executed as sudo
+     * there is no verification, that the command ges executed correctly
+     * @param command  to exec as sudo
+     */
+    void executeCommand (string command);
 
 
 };

@@ -35,8 +35,8 @@ using namespace std;
  */
 #include <unistd.h>
 #include "main.h"
-#include "PipeRelay/PipeRelay/Reader/PipeReader.h"
-#include "PCAP/IO/Reader/Pipe/PCAPPipeReader.h"
+
+#include "IO/Reader/PCAPPipeReader.h"
 
 
 int main(int argc, char *argv[]) {

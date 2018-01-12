@@ -6,10 +6,11 @@
 #define PIPERELAYV2_PCAPREADER_H
 
 
-#include "../../../../PipeRelay/PipeRelay/Reader/PipeReader.h"
-#include "../../../PCAP.h"
-#include "../../Writer/PCAPWriter.h"
-#include "../BasePCAPReader.h"
+
+#include <PipeReader.h>
+#include "../../PCAP.h"
+#include "../Writer/PCAPWriter.h"
+#include "BasePCAPReader.h"
 
 class PCAPPipeReader : public BasePCAPReader {
 public:

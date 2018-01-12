@@ -6,7 +6,7 @@
 #define PIPERELAYV2_PCAPWRITER_H
 
 
-#include "../../../PipeRelay/PipeRelay/Writer/PipeWriter.h"
+#include <PipeWriter.h>
 #include "../../PCAPHistory.h"
 #include <mutex>
 

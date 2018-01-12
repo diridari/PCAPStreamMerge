@@ -2,7 +2,7 @@
 // Created by basto on 5/7/17.
 //
 
-#include "LinuxEncalsulation.h"
+#include "../include/LinuxEncalsulation.h"
 
 
 static bool  noLinuxCookEncapsulation = true;   // if the network Protocol is not knowen to Linux it use an encapsulation Protocal

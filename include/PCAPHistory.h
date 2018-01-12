@@ -10,7 +10,7 @@
 #include <vector>
 #include <ctime>
 #include <chrono>
-#include "../Loging/Log.h"
+#include <Log.h>
 /**
  *  the goal of this class is to avoid duplicate pcap's send the the destianation pipe.
  * there is following  constellation:

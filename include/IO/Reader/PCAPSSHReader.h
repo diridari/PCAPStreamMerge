@@ -5,9 +5,9 @@
 #ifndef PIPERELAYV2_PCAPSSHREADER_H
 #define PIPERELAYV2_PCAPSSHREADER_H
 
-#include "../BasePCAPReader.h"
-#include "../../../../PipeRelay/PipeRelay/ssh/Ssh.h"
-#include "../../../../PipeRelay/PipeRelay/ssh/ReadConfig.h"
+#include "BasePCAPReader.h"
+#include <Ssh.h>
+#include <ReadConfig.h>
 
 
 class PCAPSSHReader : public BasePCAPReader {

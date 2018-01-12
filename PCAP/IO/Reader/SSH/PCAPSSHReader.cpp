@@ -2,12 +2,12 @@
 // Created by basto on 7/3/17.
 //
 
-#include "../../../../PipeRelay/PipeRelay/Reader/PipeReader.h"
-#include "../../Writer/PCAPWriter.h"
-#include "../../../../PipeRelay/PipeRelay/ssh/ReadConfig.h"
-#include "../Pipe/PCAPPipeReader.h"
-#include "../../../../PipeRelay/PipeRelay/ssh/Ssh.h"
-#include "PCAPSSHReader.h"
+#include <PipeReader.h>
+#include "../../../../include/IO/Writer/PCAPWriter.h"
+
+#include "../../../../include/IO/Reader/PCAPPipeReader.h"
+#include <Ssh.h>
+#include "../../../../include/IO/Reader/PCAPSSHReader.h"
 
 bool PCAPSSHReader::runConfig(string channel, string phy, string wpan) {
 

@@ -2,7 +2,7 @@
 // Created by basto on 7/3/17.
 //
 
-#include "PCAPWriter.h"
+#include "../../../include/IO/Writer/PCAPWriter.h"
 
 
 bool PCAPWriter::open(){

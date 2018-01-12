@@ -6,9 +6,9 @@
 
 #include <gtest/gtest.h>
 
-#include "../../PCAP/IO/Writer/PCAPWriter.h"
-#include "../../PCAP/PCAP.h"
-#include "../../PCAP/LinuxEncalsulation.h"
+#include "../../include/IO/Writer/PCAPWriter.h"
+#include "../../include/PCAP.h"
+#include "../../include/LinuxEncalsulation.h"
 
 
 int8_t pcapF3[] = {0x16, (char) 0xEF, (char) 0xC4, 0x4A, (char) 0xB3, 0x45, 0x09, 0x00, 0x04, 0, 0, 0, 0x04, 0, 0, 0,

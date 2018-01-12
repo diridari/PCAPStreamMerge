@@ -9,10 +9,10 @@
 #include <string.h>
 #include <thread>
 
-#include "PCAP/LinuxEncalsulation.h"
-#include "PCAP/IO/Writer/PCAPWriter.h"
-#include "PipeRelay/PipeRelay/ssh/Ssh.h"
-#include "PCAP/IO/Reader/SSH/PCAPSSHReader.h"
+#include "include/LinuxEncalsulation.h"
+#include "include/IO/Writer/PCAPWriter.h"
+#include <Ssh.h>
+#include "include/IO/Reader/PCAPSSHReader.h"
 
 
 using namespace std;

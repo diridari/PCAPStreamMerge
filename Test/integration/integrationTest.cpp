@@ -3,9 +3,9 @@
 //
 
 #include "../../PipeRelay/PipeRelay/Writer/PipeWriter.h"
-#include "../../PCAP/IO/Writer/PCAPWriter.h"
-#include "../../PCAP/IO/Reader/Pipe/PCAPPipeReader.h"
-#include "../../PCAP/LinuxEncalsulation.h"
+#include "../../include/IO/Writer/PCAPWriter.h"
+#include "../../include/IO/Reader/PCAPPipeReader.h"
+#include "../../include/LinuxEncalsulation.h"
 #include <unistd.h>
 #include <gtest/gtest.h>
 

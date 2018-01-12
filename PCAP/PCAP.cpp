@@ -2,8 +2,8 @@
 // Created by basti on 3/9/17.
 //
 
-#include "PCAP.h"
-#include "LinuxEncalsulation.h"
+#include "../include/PCAP.h"
+#include "../include/LinuxEncalsulation.h"
 int pcap::append(char c) {
     if(isHeader){
         if(isTime){

@@ -1,0 +1,3 @@
+[submodule "PipeStreamMerge"]
+	path = PipeStreamMerge
+	url = https://github.com/diridari/PipeStreamMerge

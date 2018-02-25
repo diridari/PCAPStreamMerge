@@ -1,4 +1,4 @@
-# PCAP-Relay   
+# PCAP Stream Merge 
 ## Goal   
 This application has the goal to combine the traffic of several Network devices to one outgoing date stream. 
 This allows you to simplify the analytics and bug finding of mesh-networks.

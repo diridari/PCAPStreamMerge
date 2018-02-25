@@ -1,3 +1,3 @@
-[submodule "PipeRelay"]
+[submodule "PipeStreamMerge"]
 	path = PipeRelay
-	url = https://github.com/diridari/PipeRelay
+	url = https://github.com/diridari/PipeStreamMerge

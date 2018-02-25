@@ -2,7 +2,7 @@
 // Created by basto on 7/3/17.
 //
 
-#include "../../../include/IO/Reader/BasePCAPReader.h"
+#include "IO/Reader/BasePCAPReader.h"
 bool BasePCAPReader::nextPCAP(){
     if(!isOpen){
         cerr << name << "  is not open"<<endl;

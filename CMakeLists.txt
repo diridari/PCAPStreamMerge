@@ -18,6 +18,7 @@ set(SOURCE_FILESTest Test/integration/integrationTest.cpp Test/pcap/historyTest.
 
 include_directories(lib)
 include_directories(include)
+include_directories(PipeRelay/include)
 
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 include_directories(${GTEST_INCLUDE_DIRS})

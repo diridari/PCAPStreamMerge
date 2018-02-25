@@ -3,11 +3,11 @@
 //
 
 #include <PipeReader.h>
-#include "../../../../include/IO/Writer/PCAPWriter.h"
+#include "IO/Writer/PCAPWriter.h"
 
-#include "../../../../include/IO/Reader/PCAPPipeReader.h"
+#include "IO/Reader/PCAPPipeReader.h"
 #include <Ssh.h>
-#include "../../../../include/IO/Reader/PCAPSSHReader.h"
+#include "IO/Reader/PCAPSSHReader.h"
 
 bool PCAPSSHReader::runConfigIWPAN(string channel, string phy, string wpan) {
 

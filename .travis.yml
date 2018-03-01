@@ -34,7 +34,6 @@ install:
     - echo ${CXX}
     - ${CXX} --version
     - ${CXX} -v
-    - sudo pip install codecov
     
     # Download and install recent cmake
     - |
@@ -45,12 +44,10 @@ install:
         export PATH=${DEPS_DIR}/cmake/bin:${PATH}
       fi
 script:
-    ############################################################################
-    # Build main and tests
-    ############################################################################
+
      - mkdir -p build
      - cd build
-     - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS}  -DBUILD_TESTS=ON ..
+     - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS}  -DBUILD_TESTS=ON --target PcapStreamMergeTest
      - make
      - make PcapStreamMergeTest
      - ctest

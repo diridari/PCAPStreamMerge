@@ -49,7 +49,9 @@ script:
     # Build main and tests
     ############################################################################
      - mkdir -p cmake
-     - cmake --build cmake-build-debug --target PcapStreamMergeTest -- -j 4
+     - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS}
+     - make
+     - make test
      - PcapStreamMergeTest
 
 

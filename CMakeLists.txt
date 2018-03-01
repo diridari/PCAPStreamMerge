@@ -19,6 +19,7 @@ set(SOURCE_FILESTest Test/integration/integrationTest.cpp Test/pcap/historyTest.
 
 
 
+
 include_directories(lib)
 include_directories(include)
 include_directories(PipeStreamMerge/include)
@@ -26,10 +27,12 @@ include_directories(PipeStreamMerge/include)
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 include_directories(${GTEST_INCLUDE_DIRS})
 
+enable_testing()
 
 add_executable(PcapStreamMerge ${SOURCE_FILES} ${SOURCE_FILES_Pipe}  main.cpp)
 add_executable(PcapStreamMergeTest ${SOURCE_FILESTest}  ${SOURCE_FILES} ${SOURCE_FILES_Pipe})
 
+add_test(UnitTests PcapStreamMergeTest)
 
 target_link_libraries(PcapStreamMerge  pthread)
 target_link_libraries(PcapStreamMergeTest ${GTEST_LIBRARIES}  pthread )

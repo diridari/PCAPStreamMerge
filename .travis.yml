@@ -45,8 +45,6 @@ install:
       fi
 script:
 
-     - mkdir -p cmake-build-debug
-     - cd cmake-build-debug
-     - cmake cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} --build cmake-build-debug --target PcapStreamMergeTest
-     - cd cmake-build-debug
+     - PipeStreamMerge
+     - make
      - ctest

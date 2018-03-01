@@ -46,9 +46,7 @@ install:
 script:
 
      - mkdir -p cmake-build-debug
-     - cd build
-     - cmake cmake --build cmake-build-debug --target PcapStreamMergeTest
      - cd cmake-build-debug
-     - make
-     - make PcapStreamMergeTest
+     - cmake cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} --build cmake-build-debug --target PcapStreamMergeTest
+     - cd cmake-build-debug
      - ctest

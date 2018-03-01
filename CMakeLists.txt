@@ -18,6 +18,7 @@ set(SOURCE_FILES_Pipe    PipeStreamMerge/src/Writer/PipeWriter.cpp PipeStreamMer
 set(SOURCE_FILESTest Test/integration/integrationTest.cpp Test/pcap/historyTest.cpp Test/init.cpp Test/pcap/pcapTest.cpp Test/sshConfig/sshConfigTest.cpp)
 
 
+
 include_directories(lib)
 include_directories(include)
 include_directories(PipeStreamMerge/include)

@@ -48,12 +48,9 @@ script:
     ############################################################################
     # Build main and tests
     ############################################################################
-     - mkdir -p cmake
-     - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS}
+     - mkdir -p build
+     - cd build
+     - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS}  -DBUILD_TESTS=ON ..
      - make
-     - make test
-     - PcapStreamMergeTest
-
-
-after_success:
-- codecov -t c376990f-2ad6-4f7b-bbdb-5378a52e295c -X gcov
+     - make PcapStreamMergeTest
+     - ctest

@@ -8,7 +8,7 @@
 #include "../../include/IO/Reader/PCAPPipeReader.h"
 #include "../../include/LinuxEncalsulation.h"
 #include <unistd.h>
-#include <gtest/gtest.h>
+#include "../gtest/gtest.h"
 
 int8_t pcapFileHEader[] = {(char) 0xD4, (char) 0xC3, (char) 0xB2, (char) 0xA1, 0x02, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00,
                            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0, 1, 0, 0, 0};
@@ -23,14 +23,13 @@ int8_t pcapF[] = {0x16, (char) 0xEF, (char) 0xC4, 0x4A, (char) 0xB3, 0x45, 0x09,
  * this has can only be done with threads because the reader/writer blocks while opening
  *
  */
-
 void reader(string loc, PCAPWriter *pw) {
     PCAPPipeReader *r = new PCAPPipeReader(loc, "reader", pw);
     r->open();
     r->run();
 
 }
-
+/*
 void writer(PCAPWriter *pcw) {
     pcw->open();
 
@@ -268,3 +267,5 @@ TEST(integrationTest, manyReaderHighDelay) {
     }
 
 }
+
+*/

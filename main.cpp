@@ -26,6 +26,7 @@ using namespace std;
  */
 
 #include <unistd.h>
+#include <logging.h>
 #include "main.h"
 
 #include "IO/Reader/PCAPPipeReader.h"
@@ -63,7 +64,7 @@ int main(int argc, char *argv[]) {
 
 
 void handleNamedPipe(int numberOfThreads){
-    Log::message("main",("cread " + to_string(numberOfThreads )+" named pipes" ),1);
+    Log::log("main : cread " + to_string(numberOfThreads )+" named pipes" ,Message);
 
     threadStartPipe *w;
 
@@ -83,13 +84,13 @@ void handleNamedPipe(int numberOfThreads){
 
 
 void startPipeReader(threadStartPipe *w){
-    Log::message("main:pipe","startThread",2);
+    Log::log("main:pipe : startThread",Info);
     //  PCAPPipeReader *r = new PipeReader(w->location,w->outWriter,w->name,w->message, w->log);
-    //PipeReader *pr = new PipeReader(w->location, new string("pipe"+ *w->name),w->message,w->log);
+    //PipeReader *pr = new PipeReader(w->location, new string("pipe"+ *w->name),w->log,w->log);
     PCAPPipeReader *r = new PCAPPipeReader(*w->location,*w->name,wr);
     r->open();
     r->run();
-    Log::message("main:pipe", "\t\t"+ *w->name+ "    : leaf",1);
+    Log::log("main:pipe \t\t"+ *w->name+ "    : leaf",Message);
     delete w;
     delete r;
     return;
@@ -97,7 +98,7 @@ void startPipeReader(threadStartPipe *w){
 
 
 void handleSSH(string s){
-    Log::message("main","open ssh with config file: \t" +s,1);
+    Log::log("main :  open ssh with config file: \t" +s,Message);
 
 
     ReadConfig *r = new ReadConfig(&s);
@@ -106,8 +107,8 @@ void handleSSH(string s){
     while(r->hasNext()){
         ReadConfig::entry *entry = r->getNextValid();
 
-        Log::message("main","establish new ssh conection to : \033[1;34m"+entry->client+ "\033[0m   with the user : \033[1;34m"
-                            +entry->user +"\033[0m   and run there : [ \033[1;34m" + entry->execute+"\033[0m ]",1);
+        Log::log("main : establish new ssh conection to : \033[1;34m"+entry->client+ "\033[0m   with the user : \033[1;34m"
+                            +entry->user +"\033[0m   and run there : [ \033[1;34m" + entry->execute+"\033[0m ]",Message);
 
         PCAPSSHReader *pcapssh = new PCAPSSHReader(wr, "ssh to "+entry->client,entry);
         l->push_back(new thread(startSSHReader, pcapssh));
@@ -124,11 +125,11 @@ void startSSHReader(PCAPSSHReader *s){
         }
     }
     if(remoteSetup){
-        Log::message("main","send ssh setupt" ,2);
+        Log::log("main : send ssh setupt" ,Info);
         s->executeCommand(remoteSetupCommand);
     }
     {
-        Log::message("main:ssh","startThread",2);
+        Log::log("main:ssh : startThread",Info);
         s->open();
         s->run();
     }
@@ -163,7 +164,7 @@ void wrongsage(){
 
 void configuration(int numberOfArg, char *argv[]) {
 
-    Log::message("main", "read configuration", 3);
+    Log::log("main : read configuration", Info);
     for (int i = 1; i < numberOfArg; i += 2) {
         bool hasNext = i + 1 < numberOfArg;
         string *s = new string(argv[i]);
@@ -180,7 +181,7 @@ void configuration(int numberOfArg, char *argv[]) {
         else if (*s == "-h")
             printUsage();
         else if (*s == "-log")
-            Log::setPrio(atoi(argv[i + 1]));
+            Log::setLogLevel((LogLevel)atoi(argv[i + 1]));
         else if (*s == "-history")
             historyTime = atoi(argv[i + 1]);
         else if (*s == "-encap") {
@@ -225,6 +226,6 @@ void configuration(int numberOfArg, char *argv[]) {
     }
     if (!(doPipe || doSSH)) {
         numberOfPipes = 2;
-        Log::message("main", "there was no input configuration -> 2 pipes", 2);
+        Log::log("main : there was no input configuration -> 2 pipes", Debug);
     }
 }

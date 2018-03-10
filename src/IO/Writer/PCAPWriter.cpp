@@ -31,9 +31,9 @@ void PCAPWriter::write(pcap::PCAP * pcap) {
         cerr << name << " write() is not open"<<endl;
         return;
     }
-    Log::message(name,"lock mutex",3);
+    Log::log(name +"lock mutex",Debug);
     mutex1.lock();  // set mutex
-    Log::message(name,"write src",3);
+    Log::log(name +"write src",Debug);
 
     if(!(avoidDuplicates && history->IsInList(pcap))) {  // avoid duplicate pcap's
         writerToOfstream(pcap, writer);
@@ -41,8 +41,8 @@ void PCAPWriter::write(pcap::PCAP * pcap) {
 
     }
     else {
-        Log::message(name," detect duplicate pcap --> cut it out",2);
+        Log::log(name +" detect duplicate pcap --> cut it out",Info);
     }
-    Log::message(name,"free mutex",3);
+    Log::log(name +"free mutex",Debug);
     mutex1.unlock(); // free mutex
 }

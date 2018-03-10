@@ -13,7 +13,7 @@ bool PCAPSSHReader::runConfigIWPAN(string channel, string phy, string wpan) {
 
     string t = "ssh -q " + config->user +"@"+config->client + " 'sudo /etc/IEEE-Sniffer/remoteSetup/setup.sh "
                + phy + " " + " " + wpan + " " + channel + " '";
-    Log::message(("ssh config " + config->client),(" : " +t) ,2);
+    Log::log(("ssh config " + config->client)+(" : " +t) ,Info);
     FILE *setUp;
     char shallBe[]  = "end";
     char is[3];
@@ -23,9 +23,9 @@ bool PCAPSSHReader::runConfigIWPAN(string channel, string phy, string wpan) {
     pclose(setUp);
     bool isSucess =  is[0] == shallBe[0] && is[1] == shallBe[1] &&is[2] == shallBe[2];
     if(!isSucess)
-        Log::message(("ssh config " + config->client),(" failt so setup client-config") ,1);
+        Log::log(("ssh config " + config->client) + (" :  failt so setup client-config") ,Info);
     else
-        Log::message(("ssh config " + config->client),("set up client-config to channel " +channel  +" succeed ") ,2);
+        Log::log(("ssh config " + config->client)+ (" : set up client-config to channel " +channel  +" succeed ") ,Info);
     return isSucess;
 
 }
@@ -33,7 +33,7 @@ bool PCAPSSHReader::runConfigIWPAN(string channel, string phy, string wpan) {
 void  PCAPSSHReader::executeCommand(string command) {
     FILE *setUp;
     string t = "ssh -q " + config->user +"@"+config->client + " 'sudo " + command + "'";
-    Log::message(("ssh config " + config->client),(" : " +t) ,2);
+    Log::log(("ssh config " + config->client)+(" : " +t) ,Info);
     setUp = popen((t.c_str()), "r");
     pclose(setUp);
 }

@@ -2,7 +2,7 @@
 // Created by basto on 9/3/17.
 //
 
-#include <gtest/gtest.h>
+#include "../gtest/gtest.h"
 
 
 #include "../../include/IO/Writer/PCAPWriter.h"

@@ -9,6 +9,7 @@
 #include <PipeWriter.h>
 #include "../../PCAPHistory.h"
 #include <mutex>
+#include <logging.h>
 
 class PCAPWriter{
     bool isOpen = false;
@@ -52,7 +53,7 @@ public:
         if(!hasPCAPHeader){
             writer->write(buff,pcap::FileHeaderSize);
             hasPCAPHeader = true;
-            Log::message(name,"write src file header to outgoing pipe",2);
+            Log::log(name+"write src file header to outgoing pipe",Debug);
         }
         mutex1.unlock();
 
@@ -69,7 +70,7 @@ public:
             writer->write(buff1,size1);
             writer->write(buff2,size2);
             hasPCAPHeader = true;
-            Log::message(name,"write src file header to outgoing pipe",2);
+            Log::log(name + "write src file header to outgoing pipe",Debug);
         }
         mutex1.unlock();
     }

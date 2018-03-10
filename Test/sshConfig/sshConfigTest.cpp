@@ -2,7 +2,7 @@
 // Created by basto on 9/8/17.
 //
 
-#include <gtest/gtest.h>
+#include "../gtest/gtest.h"
 #include <search.h>
 #include <ReadConfig.h>
 TEST(sshConfig,readEmptyConfig){

@@ -4,8 +4,7 @@
 
 
 
-#include <gtest/gtest.h>
-
+#include "../gtest/gtest.h"
 #include "../../include/IO/Writer/PCAPWriter.h"
 #include "../../include/PCAP.h"
 #include "../../include/LinuxEncalsulation.h"

@@ -16,7 +16,7 @@ This application is based on Pipe-Relay wich was written to combine several ingo
 
 ***
 ## How to use
-start the programm from the cli. 
+start this programm from the cli. 
 you can user these parameter:
             
                     -ssh <configfileName/location>      connect to ssh clients with the givven config
@@ -60,9 +60,9 @@ The config file has following definitions:
 - there are max 200 chars per line allowed   
 
 #### Syntax:   
-* < hostname or ip> < space> < username> < space> < remote command>   
+* < hostname or ip> < space> < username> < space> < remote command>    <line end>
 
-* < hostname or ip> < space> < username> < space> < remote command>   
+* < hostname or ip> < space> < username> < space> < remote command>   <line end>
 
 * ...   
    
@@ -76,7 +76,8 @@ e.g
 * the second line says that the host ist "myServer" the user is empty(2 spaces)   and the command is "tcpdump -i eth0"    
 * the third line says that the end of the config is reached so that the entry in the fourth line will be ignored     
    
-
+***
+***
 ## How to user(dev) 
 
 -   Each Pipe Reader shall run in a single Thread. 

@@ -24,9 +24,9 @@ struct threadStartPipe{
     string *location;
     PCAPWriter *outWriter;
     bool message;
-    bool log;
+    bool log_;
     threadStartPipe(string *location, PCAPWriter *outPipe, string *name = NULL, bool message = true, bool log = false)
-            :name(name),location(location),outWriter(outPipe),log(log), message(message){};
+            :name(name),location(location),outWriter(outPipe),log_(log), message(message){};
 
 };
 

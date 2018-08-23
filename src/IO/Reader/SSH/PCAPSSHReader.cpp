@@ -22,10 +22,12 @@ bool PCAPSSHReader::runConfigIWPAN(string channel, string phy, string wpan) {
     }
     pclose(setUp);
     bool isSucess =  is[0] == shallBe[0] && is[1] == shallBe[1] &&is[2] == shallBe[2];
-    if(!isSucess)
+    if(!isSucess){
         Log::log(("ssh config " + config->client) + (" :  failt so setup client-config") ,Info);
-    else
+    }
+    else{
         Log::log(("ssh config " + config->client)+ (" : set up client-config to channel " +channel  +" succeed ") ,Info);
+    }
     return isSucess;
 
 }
